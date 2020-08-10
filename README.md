@@ -1,1 +1,2 @@
-# goit-react-hw-08-phonebook
+# goit-react-hw-06-phonebook
+using redux and redux toolkit libs
