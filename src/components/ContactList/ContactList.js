@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './ContactList.module.css';
-import { contactOperations, contactSelectors } from '../../redux';
+import { contactOperations, contactSelectors } from '../../redux/phonebook';
 
 class ContactList extends Component {
   componentDidMount() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { contactSelectors } from '../../redux';
+import { contactSelectors } from '../../redux/phonebook';
 import Form from '../../components/Form';
 import Filter from '../../components/FindContact';
 import ContactList from '../../components/ContactList';

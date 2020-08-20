@@ -6,6 +6,9 @@ const Navigation = () => (
     <NavLink exact to="/">
       Home Page
     </NavLink>
+    <NavLink exact to="/contacts">
+      Contacts
+    </NavLink>
   </nav>
 );
 

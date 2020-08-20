@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { contactOperations, contactSelectors } from '../../redux'
+import { contactOperations, contactSelectors } from '../../redux/phonebook'
 import styles from './Form.module.css';
 
 const initialState = {

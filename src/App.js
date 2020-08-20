@@ -1,7 +1,7 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './redux';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { authOperations } from './redux/auth';
+import { connect } from 'react-redux';
 import './css/body.css';
 import AppBar from './components/AppBar';
 import Home from './Views/Home';
@@ -9,10 +9,15 @@ import Login from './Views/Login'
 import Register from './Views/Register';
 import Phonebook from './Views/PhoneBook';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Provider store={store}>
+
+class App extends Component {
+
+  componentDidMount() {
+    this.props.onCurrentUser()
+  }
+  render() {
+    return (
+      <>
         <AppBar />
         <Switch>
           <Route exact path='/' component={Home} />
@@ -20,9 +25,14 @@ function App() {
           <Route exact path='/register' component={Register} />
           <Route exact path='/login' component={Login} />
         </Switch>
-      </Provider>
-    </BrowserRouter>
-  );
+      </>
+    )
+  }
 }
 
-export default App;
+const mapDispatchToProps = {
+  onCurrentUser: authOperations.getCurrentUser
+}
+
+
+export default connect(null, mapDispatchToProps)(App);

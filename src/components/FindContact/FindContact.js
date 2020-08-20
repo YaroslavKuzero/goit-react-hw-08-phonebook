@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { contactActions, contactSelectors } from '../../redux/';
+import { contactActions, contactSelectors } from '../../redux/phonebook';
 import styles from './FindContact.module.css';
 
 const Filter = ({ value, onChange }) => (

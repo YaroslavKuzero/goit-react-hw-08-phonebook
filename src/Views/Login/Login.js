@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { authOperations } from '../../redux/auth';
 
 
 class Login extends Component {
@@ -14,8 +16,8 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
-    this.setState({ name: '', email: '', password: '' });
+    this.props.onLogin(this.state)
+    this.setState({ email: '', password: '' });
   };
 
   render() {
@@ -40,7 +42,7 @@ class Login extends Component {
           </label>
 
           <label>
-            Пароль
+            Password
             <input
               type="password"
               name="password"
@@ -56,4 +58,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: (data) => dispatch(authOperations.login(data))
+})
+
+export default connect(null, mapDispatchToProps)(Login);
