@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-
+import styles from './Login.module.css';
 
 class Login extends Component {
   state = {
@@ -24,16 +24,18 @@ class Login extends Component {
     const { email, password } = this.state;
 
     return (
-      <div>
-        <h1>Login page</h1>
+      <div className={styles.loginPage}>
+        <h1 className={styles.title}>Login page</h1>
 
         <form
+          className={styles.form}
           onSubmit={this.handleSubmit}
           autoComplete="off"
         >
-          <label>
+          <label className={styles.label}>
             E-mail
             <input
+              className={styles.input}
               type="email"
               name="email"
               value={email}
@@ -41,9 +43,10 @@ class Login extends Component {
             />
           </label>
 
-          <label>
+          <label className={styles.label}>
             Password
             <input
+              className={styles.input}
               type="password"
               name="password"
               value={password}
@@ -51,7 +54,7 @@ class Login extends Component {
             />
           </label>
 
-          <button type="submit">Login</button>
+          <button className={styles.btnLogin} type="submit">Login</button>
         </form>
       </div>
     );

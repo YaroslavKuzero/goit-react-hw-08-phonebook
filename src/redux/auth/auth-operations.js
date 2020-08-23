@@ -9,7 +9,7 @@ const token = {
   },
 
   unset() {
-    axios.defaults.headers.common['Authorization'] = null;
+    axios.defaults.headers.common['Authorization'] = '';
   },
 }
 

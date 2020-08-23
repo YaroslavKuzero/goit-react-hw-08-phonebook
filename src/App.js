@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { authOperations } from './redux/auth';
 import { connect } from 'react-redux';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute'
+import Spinner from './components/Spinner'
 import './css/body.css';
 import AppBar from './components/AppBar';
-import Home from './Views/Home';
-import Login from './Views/Login'
-import Register from './Views/Register';
-import Phonebook from './Views/PhoneBook';
 
+const Home = lazy(() => import('./Views/Home' /* webpackChunkName: "home-page" */));
+const Login = lazy(() => import('./Views/Login' /* webpackChunkName: "login-page" */));
+const Register = lazy(() => import('./Views/Register' /* webpackChunkName: "register-page" */));
+const Phonebook = lazy(() => import('./Views/PhoneBook' /* webpackChunkName: "phonebook-page" */));
 
 class App extends Component {
 
@@ -19,12 +22,14 @@ class App extends Component {
     return (
       <>
         <AppBar />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/contacts' component={Phonebook} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
-        </Switch>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <PrivateRoute exact path='/contacts' component={Phonebook} />
+            <PublicRoute exact restricted path='/register' component={Register} />
+            <PublicRoute exact restricted path='/login' component={Login} />
+          </Switch>
+        </Suspense>
       </>
     )
   }

@@ -1,0 +1,44 @@
+.registration {
+  margin: 0 auto;
+  padding: 5px;
+}
+.title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 400px;
+  height: 200px;
+  font-size: 20px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input {
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.btnRegister {
+  height: 30px;
+  border-radius: 5px;
+  background: rgb(197, 253, 197);
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 200ms all ease-in-out;
+}
+
+.btnRegister:hover {
+  background: lightsalmon;
+}
