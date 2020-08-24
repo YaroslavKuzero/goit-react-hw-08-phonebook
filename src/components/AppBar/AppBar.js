@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authSelectors } from '../../redux/auth'
+import PropTypes from 'prop-types';
+import { authSelectors } from '../../redux/auth';
 import Navigation from '../Navigation';
-import UserMenu from '../UserMenu'
+import UserMenu from '../UserMenu';
 import AuthNav from '../AuthNav';
-import styles from './AppBar.module.css'
-
+import styles from './AppBar.module.css';
 
 const AppBar = ({ isAuthenticated }) => (
   <div class={styles.bar}>
@@ -13,6 +13,10 @@ const AppBar = ({ isAuthenticated }) => (
     {isAuthenticated ? <UserMenu /> : <AuthNav />}
   </div>
 );
+
+AppBar.PropTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+}
 
 const mapStateToProps = (state) => ({
   isAuthenticated: authSelectors.getAuthenticated(state)

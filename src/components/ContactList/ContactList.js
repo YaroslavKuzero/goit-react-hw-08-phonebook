@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styles from './ContactList.module.css';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
 
@@ -20,6 +21,11 @@ class ContactList extends Component {
       </>
     )
   }
+}
+
+ContactList.PropTypes = {
+  renderItems: PropTypes.array.isRequired,
+  handler: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

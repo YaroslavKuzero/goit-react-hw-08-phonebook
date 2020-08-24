@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { authSelectors, authOperations } from '../../redux/auth'
-import styles from './UserMenu.module.css'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { authSelectors, authOperations } from '../../redux/auth';
+import styles from './UserMenu.module.css';
 
 const UserMenu = ({ name, onLogout }) => (
   <div>
@@ -11,6 +12,12 @@ const UserMenu = ({ name, onLogout }) => (
     </button>
   </div>
 );
+
+UserMenu.PropTypes = {
+  name: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = (state) => ({
   name: authSelectors.getUserName(state)
 })
