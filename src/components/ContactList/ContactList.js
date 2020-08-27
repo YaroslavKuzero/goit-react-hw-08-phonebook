@@ -1,42 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './ContactList.module.css';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
 
-class ContactList extends Component {
-  componentDidMount() {
-    this.props.showContacts()
-  }
-  render() {
-    return (
-      <>
-        <ul className={styles.contact_list}>
-          {this.props.renderItems.map(item => (<li className={styles.contact_list_item} key={item.id}><span className={styles.contact_name}>{item.name}: </span><span className={styles.contact_number}>{item.number}</span>
-            <button className={styles.btn_delete} title='delete'
-              onClick={() => this.props.handler(item.id)}
-            >x</button>
-          </li>))}
-        </ul>
-      </>
-    )
-  }
+export default function ContactList() {
+  const dispatch = useDispatch();
+  const renderItems = useSelector(contactSelectors.getFilteredContacts);
+
+  useEffect(() => {
+    dispatch(contactOperations.fetchContacts())
+  }, [dispatch])
+
+  return (
+    <ul className={styles.contact_list}>
+      {renderItems.map(item => (
+        <li className={styles.contact_list_item} key={item.id}>
+          <span className={styles.contact_name}>{item.name}: </span>
+          <span className={styles.contact_number}>{item.number}</span>
+          <button className={styles.btn_delete} title='delete'
+            onClick={() => dispatch(contactOperations.deleteContact(item.id))}
+          >x</button>
+        </li>
+      ))}
+    </ul>
+  )
 }
-
-ContactList.PropTypes = {
-  renderItems: PropTypes.array.isRequired,
-  handler: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  renderItems: contactSelectors.getFilteredContacts(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-  handler: id => dispatch(contactOperations.deleteContact(id)),
-  showContacts: () => dispatch(contactOperations.fetchContacts())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
-
-
