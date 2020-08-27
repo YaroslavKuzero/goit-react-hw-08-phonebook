@@ -6,14 +6,14 @@ import styles from './UserMenu.module.css';
 
 const UserMenu = ({ name, onLogout }) => (
   <div>
-    <span class={styles.welcome}>Welcome, {name}!</span>
-    <button class={styles.btnLogout} type="button" onClick={onLogout}>
+    <span className={styles.welcome}>Welcome, {name}!</span>
+    <button className={styles.btnLogout} type="button" onClick={onLogout}>
       Logout
     </button>
   </div>
 );
 
-UserMenu.PropTypes = {
+UserMenu.propTypes = {
   name: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
 }

@@ -52,7 +52,7 @@ class Form extends Component {
   }
 }
 
-Form.PropTypes = {
+Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   contacts: PropTypes.array.isRequired,
 }

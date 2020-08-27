@@ -8,13 +8,13 @@ import AuthNav from '../AuthNav';
 import styles from './AppBar.module.css';
 
 const AppBar = ({ isAuthenticated }) => (
-  <div class={styles.bar}>
+  <div className={styles.bar}>
     <Navigation />
     {isAuthenticated ? <UserMenu /> : <AuthNav />}
   </div>
 );
 
-AppBar.PropTypes = {
+AppBar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
 }
 

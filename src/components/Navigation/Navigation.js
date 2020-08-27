@@ -16,7 +16,7 @@ const Navigation = ({ isAuthenticated }) => (
   </nav>
 );
 
-Navigation.PropTypes = {
+Navigation.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
 }
 

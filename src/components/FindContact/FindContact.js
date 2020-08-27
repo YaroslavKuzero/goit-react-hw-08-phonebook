@@ -10,7 +10,7 @@ const Filter = ({ value, onChange }) => (
   </label>
 );
 
-Filter.PropTypes = {
+Filter.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }

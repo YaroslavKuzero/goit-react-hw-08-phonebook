@@ -5,6 +5,11 @@ import styles from './ContactList.module.css';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
 
 class ContactList extends Component {
+  static propTypes = {
+    renderItems: PropTypes.array.isRequired,
+    handler: PropTypes.func.isRequired,
+  }
+
   componentDidMount() {
     this.props.showContacts()
   }
@@ -23,10 +28,6 @@ class ContactList extends Component {
   }
 }
 
-ContactList.PropTypes = {
-  renderItems: PropTypes.array.isRequired,
-  handler: PropTypes.func.isRequired,
-}
 
 const mapStateToProps = (state) => ({
   renderItems: contactSelectors.getFilteredContacts(state)
