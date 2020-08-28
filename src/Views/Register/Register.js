@@ -1,77 +1,88 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
 import styles from './Register.module.css'
 
-class Register extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-  }
+export default function Register() {
+  const dispatch = useDispatch()
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleChange = (event) => {
-    const { name, value } = event.currentTarget
-    this.setState({ [name]: value });
-  };
+  const handleChange = useCallback(
+    (event) => {
+      const { name, value } = event.currentTarget
+      switch (name) {
+        case 'name':
+          setName(value)
+          break;
+        case 'email':
+          setEmail(value)
+          break;
+        case 'password':
+          setPassword(value)
+          break;
 
-  handleSubmit = (event) => {
+        default:
+          console.log(new Error());
+          break;
+      }
+    },
+    [],
+  );
+
+  const handleSubmit = useCallback((event) => {
     event.preventDefault()
-    this.props.onRegister(this.state)
-    this.setState({ name: '', email: '', password: '' });
+    dispatch(authOperations.register(name, email, password));
+    resetInputs();
+  }, [dispatch, email, name, password])
+
+  const resetInputs = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
   }
+  return (
+    <div className={styles.registration}>
+      <h1 className={styles.title}> Registration page</h1>
 
-
-  render() {
-    const { name, email, password } = this.state;
-    return (
-      <div className={styles.registration}>
-        <h1 className={styles.title}> Registration page</h1>
-
-        <form
-          className={styles.form}
-          onSubmit={this.handleSubmit}
-          autoComplete="off" >
-          <label className={styles.label}> Name
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit}
+        autoComplete="off" >
+        <label className={styles.label}> Name
             <input
-              className={styles.input}
-              type='text'
-              name='name'
-              value={name}
-              onChange={this.handleChange} />
-          </label>
+            className={styles.input}
+            type='text'
+            name='name'
+            value={name}
+            onChange={handleChange} />
+        </label>
 
-          <label className={styles.label}>
-            E-mail
+        <label className={styles.label}>
+          E-mail
             <input
-              className={styles.input}
-              type="email"
-              name="email"
-              value={email}
-              onChange={this.handleChange}
-            />
-          </label>
+            className={styles.input}
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </label>
 
-          <label className={styles.label}>
-            Password
+        <label className={styles.label}>
+          Password
             <input
-              className={styles.input}
-              type="password"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </label>
+            className={styles.input}
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </label>
 
-          <button className={styles.btnRegister} type='submit'>Register</button>
-        </form>
-      </div>
-    )
-  }
+        <button className={styles.btnRegister} type='submit'>Register</button>
+      </form>
+    </div>
+  )
 }
-
-const mapDispatchToProps = dispatch => ({
-  onRegister: (data) => dispatch(authOperations.register(data))
-})
-
-export default connect(null, mapDispatchToProps)(Register);

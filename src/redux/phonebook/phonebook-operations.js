@@ -8,14 +8,13 @@ const fetchContacts = () => dispatch => {
 }
 
 
-const addContact = contact => dispatch => {
+const addContact = (name, number) => dispatch => {
   const newContact = {
-    name: contact.name,
-    number: contact.number
+    name: name,
+    number: number,
   };
 
   dispatch(contactActions.addContactRequest())
-
 
   axios.post('/contacts', newContact).then(({ data }) => dispatch(contactActions.addContactSuccess(data))).catch(error => dispatch(contactActions.addContactError(error)))
 }

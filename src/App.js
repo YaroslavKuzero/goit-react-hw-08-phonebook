@@ -1,8 +1,7 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { authOperations } from './redux/auth';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import Spinner from './components/Spinner';
@@ -14,35 +13,37 @@ const Login = lazy(() => import('./Views/Login' /* webpackChunkName: "login-page
 const Register = lazy(() => import('./Views/Register' /* webpackChunkName: "register-page" */));
 const Phonebook = lazy(() => import('./Views/PhoneBook' /* webpackChunkName: "phonebook-page" */));
 
-class App extends Component {
+export default function App() {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.props.onCurrentUser()
-  }
-  render() {
-    return (
-      <>
-        <AppBar />
-        <Suspense fallback={<Spinner />}>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <PrivateRoute exact path='/contacts' component={Phonebook} />
-            <PublicRoute exact restricted path='/register' component={Register} />
-            <PublicRoute exact restricted path='/login' component={Login} />
-          </Switch>
-        </Suspense>
-      </>
-    )
-  }
+  useEffect(() => {
+    dispatch(authOperations.getCurrentUser())
+  }, [dispatch])
+
+  return (
+    <>
+      <AppBar />
+      <Suspense fallback={<Spinner />}>
+        <Switch>
+
+          <Route exact path='/'>
+            <Home />
+          </Route>
+
+          <PrivateRoute exact path='/contacts'>
+            <Phonebook />
+          </PrivateRoute>
+
+          <PublicRoute exact restricted path='/register'>
+            <Register />
+          </PublicRoute>
+
+          <PublicRoute exact restricted path='/login'>
+            <Login />
+          </PublicRoute>
+
+        </Switch>
+      </Suspense>
+    </>
+  )
 }
-
-App.propTypes = {
-  onCurrentUser: PropTypes.func.isRequired,
-}
-
-const mapDispatchToProps = {
-  onCurrentUser: authOperations.getCurrentUser
-}
-
-
-export default connect(null, mapDispatchToProps)(App);

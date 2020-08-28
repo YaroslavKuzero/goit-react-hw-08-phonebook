@@ -1,68 +1,62 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
-import PropTypes from 'prop-types';
 import styles from './Form.module.css';
 
-const initialState = {
-  name: '',
-  number: ''
-}
+export default function Form() {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const contacts = useSelector(contactSelectors.getContacts);
 
-
-class Form extends Component {
-
-  state = {
-    name: '',
-    number: ''
-  }
-
-  addContactHandler = (event) => {
-    event.preventDefault()
-    if (this.props.contacts.find(contact => contact.name.toLowerCase() === this.state.name.toLowerCase())) {
-      alert(`${this.state.name} already in your contact list`)
+  const addContactHandler = useCallback((event) => {
+    event.preventDefault();
+    if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      alert(`${name} already in your contact list`)
       return;
     }
 
-    this.props.onSubmit(this.state)
-    this.resetInputs()
-  };
+    dispatch(contactOperations.addContact(name, number));
+    resetInputs();
+  }, [dispatch, name, number, contacts]);
 
-  changeHandler = event => {
-    const { name, value } = event.currentTarget
-    this.setState({ [name]: value });
+  const changeHandler = useCallback((event) => {
+    const { name, value } = event.currentTarget;
+    name === 'name' ? setName(value) : setNumber(value);
+  }, [])
+
+  const resetInputs = () => {
+    setName('');
+    setNumber('');
   }
 
-  resetInputs = () => {
-    this.setState(initialState)
-  }
-
-  render() {
-    return (
-      <form className={styles.form} onSubmit={this.addContactHandler}>
-        <label>
-          <input className={styles.input_name} name='name' type='text' placeholder='Name' value={this.state.name} onChange={this.changeHandler}></input>
-        </label>
-        <label>
-          <input className={styles.input_num} name='number' type='tel' placeholder='Number' value={this.state.number} onChange={this.changeHandler}></input>
-        </label>
-        <button className={styles.btn_add} type='submit'>Add contact</button>
-      </form>
-    )
-  }
+  return (
+    <form
+      className={styles.form}
+      onSubmit={addContactHandler}>
+      <label>
+        <input
+          className={styles.input_name}
+          name='name'
+          type='text'
+          placeholder='Name'
+          value={name}
+          onChange={changeHandler}></input>
+      </label>
+      <label>
+        <input
+          className={styles.input_num}
+          name='number'
+          type='tel'
+          placeholder='Number'
+          value={number}
+          onChange={changeHandler}></input>
+      </label>
+      <button
+        className={styles.btn_add}
+        type='submit'>
+        Add contact
+        </button>
+    </form>
+  )
 }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  contacts: PropTypes.array.isRequired,
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: data => dispatch(contactOperations.addContact(data)),
-})
-
-const mapStateToProps = (state) => ({
-  contacts: contactSelectors.getContacts(state),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);

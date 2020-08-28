@@ -13,7 +13,12 @@ const token = {
   },
 }
 
-const register = userData => async dispatch => {
+const register = (name, email, password) => async dispatch => {
+  const userData = {
+    name,
+    email,
+    password,
+  }
   dispatch(authActions.registerRequest());
 
   try {
@@ -25,7 +30,11 @@ const register = userData => async dispatch => {
   }
 }
 
-const login = userData => async dispatch => {
+const login = (email, password) => async dispatch => {
+  const userData = {
+    email,
+    password,
+  }
   dispatch(authActions.loginRequest());
 
   try {
