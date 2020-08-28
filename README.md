@@ -1,4 +1,6 @@
-# Критерии приема
+[#refactored on hooks](https://goit-hw08-hooks-yaroslav-kuzero.netlify.app)
+
+## Критерии приема
 
 - Создан репозиторий `goit-react-hw-08-phonebook`
 
