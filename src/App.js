@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { authOperations } from './redux/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import Spinner from './components/Spinner';

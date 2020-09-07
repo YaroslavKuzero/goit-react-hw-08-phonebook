@@ -1,41 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-import styles from './Login.module.css';
+
+import s from './Login.module.css';
+
+const initialState = {
+  email: '',
+  password: '',
+};
 
 class Login extends Component {
-  state = {
-    email: '',
-    password: '',
-  };
+  state = initialState;
 
-  handleChange = (event) => {
-    const { name, value } = event.currentTarget;
+  handleChange = ({ currentTarget: { name, value } }) => {
     this.setState({ [name]: value });
   };
 
   handleSubmit = (event) => {
+    const { onLogin } = this.props
     event.preventDefault();
-    this.props.onLogin(this.state)
-    this.setState({ email: '', password: '' });
+    onLogin(this.state)
+    this.setState(initialState);
   };
 
   render() {
     const { email, password } = this.state;
 
     return (
-      <div className={styles.loginPage}>
-        <h1 className={styles.title}>Login page</h1>
+      <div className={s.loginPage}>
+        <h1 className={s.title}>Login page</h1>
 
         <form
-          className={styles.form}
+          className={s.form}
           onSubmit={this.handleSubmit}
           autoComplete="off"
         >
-          <label className={styles.label}>
+          <label className={s.label}>
             E-mail
             <input
-              className={styles.input}
+              className={s.input}
               type="email"
               name="email"
               value={email}
@@ -43,10 +46,10 @@ class Login extends Component {
             />
           </label>
 
-          <label className={styles.label}>
+          <label className={s.label}>
             Password
             <input
-              className={styles.input}
+              className={s.input}
               type="password"
               name="password"
               value={password}
@@ -54,7 +57,7 @@ class Login extends Component {
             />
           </label>
 
-          <button className={styles.btnLogin} type="submit">Login</button>
+          <button className={s.btnLogin} type="submit">Login</button>
         </form>
       </div>
     );
