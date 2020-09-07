@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-import styles from './Login.module.css';
+
+import s from './Login.module.css';
 
 
 export default function Login() {
@@ -9,8 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.currentTarget;
+  const handleChange = useCallback(({ currentTarget: { name, value } }) => {
     name === 'email' ? setEmail(value) : setPassword(value);
   }, [],
   );
@@ -30,18 +30,18 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.loginPage}>
-      <h1 className={styles.title}>Login page</h1>
+    <div className={s.loginPage}>
+      <h1 className={s.title}>Login page</h1>
 
       <form
-        className={styles.form}
+        className={s.form}
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        <label className={styles.label}>
+        <label className={s.label}>
           E-mail
             <input
-            className={styles.input}
+            className={s.input}
             type="email"
             name="email"
             value={email}
@@ -49,10 +49,10 @@ export default function Login() {
           />
         </label>
 
-        <label className={styles.label}>
+        <label className={s.label}>
           Password
             <input
-            className={styles.input}
+            className={s.input}
             type="password"
             name="password"
             value={password}
@@ -60,7 +60,7 @@ export default function Login() {
           />
         </label>
 
-        <button className={styles.btnLogin} type="submit">Login</button>
+        <button className={s.btnLogin} type="submit">Login</button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../../redux/auth';
-import styles from './UserMenu.module.css';
+import { welcome, btnLogout } from './UserMenu.module.css';
 
 export default function UserMenu() {
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ export default function UserMenu() {
   )
   return (
     <div>
-      <span className={styles.welcome}>Welcome, {name}!</span>
+      <span className={welcome}>Welcome, {name}!</span>
       <button
-        className={styles.btnLogout}
+        className={btnLogout}
         type="button"
         onClick={onLogout}>
         Logout

@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
-import styles from './Form.module.css';
+
+import s from './Form.module.css';
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -20,8 +21,7 @@ export default function Form() {
     resetInputs();
   }, [dispatch, name, number, contacts]);
 
-  const changeHandler = useCallback((event) => {
-    const { name, value } = event.currentTarget;
+  const changeHandler = useCallback(({ currentTarget: { name, value } }) => {
     name === 'name' ? setName(value) : setNumber(value);
   }, [])
 
@@ -32,11 +32,11 @@ export default function Form() {
 
   return (
     <form
-      className={styles.form}
+      className={s.form}
       onSubmit={addContactHandler}>
       <label>
         <input
-          className={styles.input_name}
+          className={s.input_name}
           name='name'
           type='text'
           placeholder='Name'
@@ -45,7 +45,7 @@ export default function Form() {
       </label>
       <label>
         <input
-          className={styles.input_num}
+          className={s.input_num}
           name='number'
           type='tel'
           placeholder='Number'
@@ -53,7 +53,7 @@ export default function Form() {
           onChange={changeHandler}></input>
       </label>
       <button
-        className={styles.btn_add}
+        className={s.btn_add}
         type='submit'>
         Add contact
         </button>

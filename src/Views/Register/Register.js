@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-import styles from './Register.module.css'
+
+import s from './Register.module.css';
 
 export default function Register() {
   const dispatch = useDispatch()
@@ -10,8 +11,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
 
   const handleChange = useCallback(
-    (event) => {
-      const { name, value } = event.currentTarget
+    ({ currentTarget: { name, value } }) => {
       switch (name) {
         case 'name':
           setName(value)
@@ -43,26 +43,26 @@ export default function Register() {
     setPassword('');
   }
   return (
-    <div className={styles.registration}>
-      <h1 className={styles.title}> Registration page</h1>
+    <div className={s.registration}>
+      <h1 className={s.title}> Registration page</h1>
 
       <form
-        className={styles.form}
+        className={s.form}
         onSubmit={handleSubmit}
         autoComplete="off" >
-        <label className={styles.label}> Name
+        <label className={s.label}> Name
             <input
-            className={styles.input}
+            className={s.input}
             type='text'
             name='name'
             value={name}
             onChange={handleChange} />
         </label>
 
-        <label className={styles.label}>
+        <label className={s.label}>
           E-mail
             <input
-            className={styles.input}
+            className={s.input}
             type="email"
             name="email"
             value={email}
@@ -70,10 +70,10 @@ export default function Register() {
           />
         </label>
 
-        <label className={styles.label}>
+        <label className={s.label}>
           Password
             <input
-            className={styles.input}
+            className={s.input}
             type="password"
             name="password"
             value={password}
@@ -81,7 +81,7 @@ export default function Register() {
           />
         </label>
 
-        <button className={styles.btnRegister} type='submit'>Register</button>
+        <button className={s.btnRegister} type='submit'>Register</button>
       </form>
     </div>
   )

@@ -2,11 +2,13 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { authOperations } from './redux/auth';
 import { useDispatch } from 'react-redux';
+
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import Spinner from './components/Spinner';
-import './css/body.css';
 import AppBar from './components/AppBar';
+
+import './css/body.css';
 
 const Home = lazy(() => import('./Views/Home' /* webpackChunkName: "home-page" */));
 const Login = lazy(() => import('./Views/Login' /* webpackChunkName: "login-page" */));
