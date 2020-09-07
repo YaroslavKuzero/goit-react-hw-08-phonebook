@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import styles from './ContactList.module.css';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
+import PropTypes from 'prop-types';
+
+import styles from './ContactList.module.css';
 
 class ContactList extends Component {
   static propTypes = {
-    renderItems: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
     handler: PropTypes.func.isRequired,
   }
 
@@ -14,12 +15,13 @@ class ContactList extends Component {
     this.props.showContacts()
   }
   render() {
+    const { items, onDelete } = this.props
     return (
       <>
         <ul className={styles.contact_list}>
-          {this.props.renderItems.map(item => (<li className={styles.contact_list_item} key={item.id}><span className={styles.contact_name}>{item.name}: </span><span className={styles.contact_number}>{item.number}</span>
+          {items.map(item => (<li className={styles.contact_list_item} key={item.id}><span className={styles.contact_name}>{item.name}: </span><span className={styles.contact_number}>{item.number}</span>
             <button className={styles.btn_delete} title='delete'
-              onClick={() => this.props.handler(item.id)}
+              onClick={() => onDelete(item.id)}
             >x</button>
           </li>))}
         </ul>
@@ -30,14 +32,12 @@ class ContactList extends Component {
 
 
 const mapStateToProps = (state) => ({
-  renderItems: contactSelectors.getFilteredContacts(state)
+  items: contactSelectors.getFilteredContacts(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-  handler: id => dispatch(contactOperations.deleteContact(id)),
+  onDelete: id => dispatch(contactOperations.deleteContact(id)),
   showContacts: () => dispatch(contactOperations.fetchContacts())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
-
-

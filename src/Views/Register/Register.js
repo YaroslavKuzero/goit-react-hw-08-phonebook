@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-import styles from './Register.module.css'
 
+import s from './Register.module.css';
+
+const initialState = {
+  name: '',
+  email: '',
+  password: '',
+}
 class Register extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-  }
+  state = initialState
 
   handleChange = (event) => {
     const { name, value } = event.currentTarget
@@ -16,35 +18,36 @@ class Register extends Component {
   };
 
   handleSubmit = (event) => {
+    const { onRegister } = this.props
     event.preventDefault()
-    this.props.onRegister(this.state)
-    this.setState({ name: '', email: '', password: '' });
+    onRegister(this.state)
+    this.setState(initialState);
   }
 
 
   render() {
     const { name, email, password } = this.state;
     return (
-      <div className={styles.registration}>
-        <h1 className={styles.title}> Registration page</h1>
+      <div className={s.registration}>
+        <h1 className={s.title}> Registration page</h1>
 
         <form
-          className={styles.form}
+          className={s.form}
           onSubmit={this.handleSubmit}
           autoComplete="off" >
-          <label className={styles.label}> Name
+          <label className={s.label}> Name
             <input
-              className={styles.input}
+              className={s.input}
               type='text'
               name='name'
               value={name}
               onChange={this.handleChange} />
           </label>
 
-          <label className={styles.label}>
+          <label className={s.label}>
             E-mail
             <input
-              className={styles.input}
+              className={s.input}
               type="email"
               name="email"
               value={email}
@@ -52,10 +55,10 @@ class Register extends Component {
             />
           </label>
 
-          <label className={styles.label}>
+          <label className={s.label}>
             Password
             <input
-              className={styles.input}
+              className={s.input}
               type="password"
               name="password"
               value={password}
@@ -63,7 +66,7 @@ class Register extends Component {
             />
           </label>
 
-          <button className={styles.btnRegister} type='submit'>Register</button>
+          <button className={s.btnRegister} type='submit'>Register</button>
         </form>
       </div>
     )

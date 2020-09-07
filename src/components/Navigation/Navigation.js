@@ -3,14 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authSelectors } from '../../redux/auth';
 import PropTypes from 'prop-types';
-import styles from './Navigation.module.css'
+
+import { linkHome, linkContacts } from './Navigation.module.css'
 
 const Navigation = ({ isAuthenticated }) => (
   <nav>
-    <NavLink className={styles.linkHome} exact to="/">
+    <NavLink className={linkHome} exact to="/">
       Home
     </NavLink>
-    {isAuthenticated && <NavLink className={styles.linkContacts} exact to="/contacts">
+    {isAuthenticated && <NavLink className={linkContacts} exact to="/contacts">
       Contacts
     </NavLink>}
   </nav>

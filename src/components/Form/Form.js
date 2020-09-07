@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { contactOperations, contactSelectors } from '../../redux/phonebook';
 import PropTypes from 'prop-types';
-import styles from './Form.module.css';
+
+import s from './Form.module.css';
 
 const initialState = {
   name: '',
@@ -12,24 +13,22 @@ const initialState = {
 
 class Form extends Component {
 
-  state = {
-    name: '',
-    number: ''
-  }
+  state = initialState
 
   addContactHandler = (event) => {
+    const { contacts, onSubmit } = this.props;
+    const { name } = this.state;
     event.preventDefault()
-    if (this.props.contacts.find(contact => contact.name.toLowerCase() === this.state.name.toLowerCase())) {
-      alert(`${this.state.name} already in your contact list`)
+    if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      alert(`${name} already in your contact list`)
       return;
     }
 
-    this.props.onSubmit(this.state)
+    onSubmit(this.state)
     this.resetInputs()
   };
 
-  changeHandler = event => {
-    const { name, value } = event.currentTarget
+  changeHandler = ({ currentTarget: { name, value } }) => {
     this.setState({ [name]: value });
   }
 
@@ -38,15 +37,16 @@ class Form extends Component {
   }
 
   render() {
+    const { name, number } = this.state
     return (
-      <form className={styles.form} onSubmit={this.addContactHandler}>
+      <form className={s.form} onSubmit={this.addContactHandler}>
         <label>
-          <input className={styles.input_name} name='name' type='text' placeholder='Name' value={this.state.name} onChange={this.changeHandler}></input>
+          <input className={s.input_name} name='name' type='text' placeholder='Name' value={name} onChange={this.changeHandler}></input>
         </label>
         <label>
-          <input className={styles.input_num} name='number' type='tel' placeholder='Number' value={this.state.number} onChange={this.changeHandler}></input>
+          <input className={s.input_num} name='number' type='tel' placeholder='Number' value={number} onChange={this.changeHandler}></input>
         </label>
-        <button className={styles.btn_add} type='submit'>Add contact</button>
+        <button className={s.btn_add} type='submit'>Add contact</button>
       </form>
     )
   }
